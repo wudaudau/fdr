@@ -1,2 +1,2 @@
 # fdr
-False Discovery Rate.
+False Discovery Rate in Python.
