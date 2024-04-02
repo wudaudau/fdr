@@ -1,6 +1,6 @@
 
 
-from scipy.stats import rankdata
+from scipy.stats import rankdata, false_discovery_control
 
 
 def cal_p_vals_rank(p_vals: list) -> list:
@@ -19,12 +19,9 @@ def cal_fdr(p_vals: list) -> list:
     """
     p_vals: list of p-values. No NaN values.
 
-    Learn from https://stackoverflow.com/questions/25185205/calculating-adjusted-p-values-in-python
-    Calculate the FDR of the p-values.
+    Calculate the FDR of the p-values using false_discovery_control (Benjamini-Hochberg method).
     Return the FDR of the p-values.
     """
-    ranked_p_values = cal_p_vals_rank(p_vals)
-    fdr = p_vals * (len(p_vals) / ranked_p_values)
-    fdr[fdr > 1] = 1
+    fdr = false_discovery_control(p_vals, method='bh')
 
     return fdr
